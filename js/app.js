@@ -14,6 +14,7 @@ $bossArmor = $('.bossArmor');
 $dualWield = $('#dualWield');
 $progressBar = $('.progress-bar');
 $enemyPicture = $('#enemyPicture');
+$playerPicture =$('#playerPicture');
 
 class Player {
     constructor(name){
@@ -49,10 +50,25 @@ class Player {
             let damageDone = this.damage - boss.enemy[currentEnemy].armor;
             $playerText.text(`${player.name} does ${damageDone} to ${boss.enemy[currentEnemy].name}`);
             boss.enemy[currentEnemy].health -= damageDone;
+            $playerPicture.attr('src', 'https://i.imgur.com/yaOdv5D.gif');
             
-            player.displayStats();
+            setTimeout(
+                function() 
+                {
+                    player.displayStats();
+                }, 1600);
+            
             checkIfDead();
-            }else{$playerText.text(`${player.name} misses ${boss.enemy[currentEnemy].name}`);
+            
+            }else{
+                $playerPicture.attr('src', 'https://i.imgur.com/yaOdv5D.gif');
+                setTimeout(
+                    function() 
+                    {
+                        player.displayStats();
+                    }, 1600);
+                $playerText.text(`${player.name} misses ${boss.enemy[currentEnemy].name}`);
+            
             checkIfDead();
         }
     }
@@ -147,7 +163,7 @@ class Enemy {
     enemy1Attack(){
         if ((Math.random() < this.accuracy)){
         
-        $enemyPicture.attr('src', '1attack.gif');
+        $enemyPicture.attr('src', 'https://i.imgur.com/XDgeSsr.gif');
         let damageDone = this.damage - player.armor;
         player.health -= damageDone;
         $enemyText.text(`${this.name} hits ${player.name} for ${damageDone} damage with weapon 1!`);
@@ -155,11 +171,11 @@ class Enemy {
         setTimeout(
             function() 
             {
-                $enemyPicture.attr('src', 'https://i.imgur.com/QDXf60S.gif');
-            }, 800);
+                $enemyPicture.attr('src', 'https://i.imgur.com/JCzJ4J4.gif');
+            }, 2800);
             }else{
                 $enemyText.text(`${this.name} misses ${player.name}`);
-                $enemyPicture.attr('src', '1attack.gif');
+                $enemyPicture.attr('src', 'https://i.imgur.com/JCzJ4J4.gif');
     }};
     //  was caught up here trying to figure out why my enemyHit()was working spent like for 45 ish mins and it was because of a single = instead of a double == argh!!! :(
     enemyHit () {
@@ -329,6 +345,11 @@ let checkIfDead = function(){
                 player.gold += 20;
                 console.log(player);
                 player.displayStats();
+                setTimeout(
+                    function() 
+                    {
+                        $enemyPicture.attr('src', 'https://i.imgur.com/aP42Ky8.gif');
+                    }, 1800);
                 upgradeStore();
                 } else {
                     // might need a settimeout here to delay from player to enemy attack animation and text
